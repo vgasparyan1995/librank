@@ -1,6 +1,13 @@
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+//! An iterator extension trait for ranking items.
+
+/// Represents the rank of an item.
+/// The rank is a 1-based integer.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Rank(pub usize);
 
+/// An iterator that yields the rank of each item.
+/// The rank is determined by a key extraction function.
+/// Items with the same key will have the same rank.
 pub struct RankedBy<I, F, K> {
     iter: I,
     f: F,
@@ -28,7 +35,33 @@ where
     }
 }
 
+/// An extension trait for iterators that provides a `rank_by` method.
 pub trait RankedExt: Iterator {
+    /// Ranks the items in the iterator by a key.
+    ///
+    /// This method sorts the iterator's items by the key produced by the given function,
+    /// and then assigns a rank to each item. The rank is dense, meaning that items with
+    /// the same key will have the same rank, and the next rank will be incremented by 1.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use librank::rank::{RankedExt, Rank};
+    ///
+    /// let data = vec![10, 20, 10, 30, 20, 10];
+    /// let ranked: Vec<(Rank, i32)> = data.into_iter().rank_by(|&x| x).collect();
+    ///
+    /// let expected = vec![
+    ///     (Rank(1), 10),
+    ///     (Rank(1), 10),
+    ///     (Rank(1), 10),
+    ///     (Rank(2), 20),
+    ///     (Rank(2), 20),
+    ///     (Rank(3), 30),
+    /// ];
+    ///
+    /// assert_eq!(ranked, expected);
+    /// ```
     fn rank_by<F, K>(self, f: F) -> RankedBy<impl Iterator<Item = Self::Item>, F, K>
     where
         Self: Sized,
@@ -154,3 +187,4 @@ mod tests {
         assert_eq!(ranked, expected);
     }
 }
+
