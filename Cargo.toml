@@ -2,3 +2,8 @@
 name = "librank"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
+description = "A Rust library for adding ranking information to an iterator."
+repository = "https://github.com/vgasparyan1995/librank"
+keywords = ["rank", "ranking", "iterator", "extension", "dense"]
+categories = ["algorithms", "iterator"]

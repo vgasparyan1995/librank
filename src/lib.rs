@@ -1,4 +1,4 @@
-//! `librank` is a small Rust library for adding ranking information to an iterator.
+//! `librank` is a Rust library for adding ranking information to an iterator.
 //!
 //! The main entry point is the `RankedExt` trait, which provides the `rank_by` method
 //! for any iterator.
