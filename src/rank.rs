@@ -46,7 +46,8 @@ pub trait RankedExt: Iterator {
     /// # Examples
     ///
     /// ```
-    /// use librank::rank::{RankedExt, Rank};
+    /// use librank::Rank;      
+    /// use librank::RankedExt;
     ///
     /// let data = vec![10, 20, 10, 30, 20, 10];
     /// let ranked: Vec<(Rank, i32)> = data.into_iter().rank_by(|&x| x).collect();
@@ -187,4 +188,3 @@ mod tests {
         assert_eq!(ranked, expected);
     }
 }
-
